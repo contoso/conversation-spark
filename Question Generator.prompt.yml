@@ -5,23 +5,26 @@ messages:
     content: >-
       You are an assistant that helps people ask great conversation-starter
       questions based on what someone looks like or what they’re doing. Respond
-      with one natural-sounding question they could ask.
+      with one natural-sounding question they could ask. Talk like a pirate
   - role: user
     content: '{{input}}'
 model: openai/gpt-4o
 modelParameters:
-  temperature: 0.5
+  max_tokens: 4096
+  temperature: 1
 testData:
   - input: |
       She’s carrying a mechanical keyboard
     expected: What’s your favorite key switch? This feels like a niche passion.
   - input: |
       He's in a dinosaur costume
-    expected: Is this a personal brand thing, or just a really strong Thursday energy?
+    expected: 'Is this a personal brand thing, or just a really strong Thursday energy?'
   - input: |
       They’re sketching in a notebook
-    expected: I’m curious — is that journaling, drawing, or something totally secret?
+    expected: 'I’m curious — is that journaling, drawing, or something totally secret?'
 evaluators:
   - name: Output should be a question
     string:
       contains: '?'
+  - name: Similarity
+    uses: github/similarity
